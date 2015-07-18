@@ -15,6 +15,26 @@ and open the template in the editor.
     width: 100%;
     z-index: 99999;
 }
+
 .jwl-alert {
     margin-top: 20px;
+}
+
+.jwl-normal-container {
+    background: white;
+    margin-top: 70px;
+    opacity: 0.8;
+}
+
+.jwl-footer-container {
+     color: lightgrey;
+     margin-top: 20px;
+}
+
+body {
+    background: url('../images/301431.jpg') no-repeat 0 50% fixed; 
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
 }
