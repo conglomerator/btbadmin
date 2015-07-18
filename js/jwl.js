@@ -5,12 +5,13 @@
  */
 
 var displayMessage = function(data){
-    $(".jwl-alert-container").append("<div class='alert jwl-alert alert-"+data.messageType+" alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+data.messageText+"</div>");
+    if (data.message) $(".jwl-alert-container").append("<div class='alert jwl-alert alert-"+data.message.type+" alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+data.message.text+"</div>");
 };
 
 var test = function(){
     $.getJSON("/php/index.php",displayMessage);
 };
 
-test();
-test();
+$(document).ready(function(){
+    $(".jwl-test-navitem").click(test);
+});
