@@ -1,3 +1,3 @@
 <?php
 header('Content-Type: application/json');
-echo(json_encode(rand(0,10000)));
+echo(json_encode(mt_rand(0,1000)));

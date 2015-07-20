@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Input Binding | BTBADMIN</title>
+        <title>Random Number | BTBADMIN</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/jwl.css" rel="stylesheet">
@@ -28,14 +28,21 @@
     <ng-include src="'incl/navbar.html'"></ng-include>
     <ng-include src="'incl/alerts.html'"></ng-include>
     <div class="container jwl-normal-container">
-        <h1>Input Binding</h1>
-        <p style="font-size:144px">{{val}}&nbsp;</p>
-        <p><input type="text" ng-model="val"></p>
+        <h1>Random Number</h1>
+        <p style="font-size:144px">{{val}}</p>
+        <p><button type="button" ng-click="getRand()" class="btn btn-primary"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Refresh</button></p>
     </div>
     <ng-include src="'incl/footer.html'"></ng-include>
     <script>
-                var app = angular.module('theApp', []);
-                app.controller('theController', function($scope) {});
+                var app = angular.module('theApp',[]);
+                app.controller('theController',function($scope,$http) {
+                    $scope.getRand = function(){
+                        $http.get("php/rand.php").success(function(data){
+                            $scope.val = data;
+                        });
+                    };
+                    $scope.getRand();
+                });
     </script>
 </body>
 </html>
