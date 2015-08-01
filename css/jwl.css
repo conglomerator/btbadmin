@@ -28,10 +28,28 @@ and open the template in the editor.
     opacity: 0.8;
 }
 
+.jwl-landing-container {
+    background: white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-bottom: 0;
+    opacity: 0.8;
+    text-align: center;
+}
+
 .jwl-footer-container {
      color: lightgrey;
      margin-top: 20px;
      text-align: center;
+}
+
+.jwl-empty-container {
+    height: 50px;
+}
+
+.jwl-landing-page-body {
+    background: url('../images/301431_264.jpg') no-repeat 0 50% fixed; 
+    background-size: cover;
 }
 
 body {
