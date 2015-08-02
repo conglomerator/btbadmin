@@ -10,7 +10,7 @@ JWLsetErrorHandlingOptions();
 error_log("[".$_SERVER["PHP_AUTH_USER"]."] [".$_SERVER["REQUEST_URI"]."] [".$_SERVER["REQUEST_TIME"]."] Script started.");
 
 // Generate random number
-$randNum = mt_rand(0,10000);
+$randNum = mt_rand(0,100000);
 
 // Send random number
 header('Content-Type: application/json');
