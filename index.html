@@ -8,6 +8,7 @@
         <title>Home | BTBADMIN</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- JWL CSS stylesheet -->
         <link href="css/jwl.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,15 +24,15 @@
         <script src="js/angular.min.js"></script>
         <!-- JWL JavaScript -->
         <script src="js/jwl.js"></script>
+        <!-- This page's NG app/controller -->
+        <script>
+            angular.module("theApp",[]).controller("theController",function(){});
+        </script>
     </head>
-    <body">
+    <body>
         <ng-include src="'incl/navbar.html'"></ng-include>
         <ng-include src="'incl/alerts.html'"></ng-include>
         <div class="container jwl-empty-container"></div>
-    <ng-include src="'incl/footer.html'"></ng-include>
-    <script>
-                var app = angular.module('theApp', []);
-                app.controller('theController', function ($scope) {});
-    </script>
-</body>
+        <ng-include src="'incl/footer.html'"></ng-include>
+    </body>
 </html>
