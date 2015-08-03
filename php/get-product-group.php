@@ -3,10 +3,7 @@
 // Load JWL PHP
 //require_once("jwl.php");
 
-define('MYSQL_USERNAME', 'cocheese_1911');
-define('MYSQL_PASSWORD', 'JxMa2e8');
-define('MYSQL_HOSTNAME', 'localhost');
-define('MYSQL_PDGDBNAME','cocheese_pdgcommerce');
+// Database constants *** need to figure out how to add this in
 
 $db_handle = new PDO('mysql:host='.MYSQL_HOSTNAME.';dbname='.MYSQL_PDGDBNAME,MYSQL_USERNAME,MYSQL_PASSWORD);
 
