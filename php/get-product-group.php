@@ -9,8 +9,8 @@ define('MYSQL_HOSTNAME', 'localhost');
 
 $db_handle = new PDO('mysql:host='.MYSQL_HOSTNAME.';dbname=pdgcommerce',MYSQL_USERNAME,MYSQL_PASSWORD);
 
-$field = $_GET['searchField'];
-$value = $_GET['searchValue'];
+$field = $_GET['field'];
+$value = $_GET['value'];
 
 $query = $db_handle->query('SELECT * FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%" ORDER BY PR_SKU DESC');
 
