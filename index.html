@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="theApp" ng-controller="theController">
+<html lang="en" ng-app="theApp">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,10 +26,10 @@
         <script src="js/jwl.js"></script>
         <!-- This page's NG app/controller -->
         <script>
-            angular.module("theApp",[]).controller("theController",function(){});
+            angular.module("theApp",[]).controller("MainController",function(){});
         </script>
     </head>
-    <body>
+    <body ng-controller="MainController as mc">
         <ng-include src="'incl/navbar.html'"></ng-include>
         <ng-include src="'incl/alerts.html'"></ng-include>
         <div class="container jwl-empty-container"></div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="theApp" ng-controller="theController">
+<html lang="en" ng-app="theApp">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,24 +26,24 @@
         <script src="js/jwl.js"></script>
         <!-- This page's NG app/controller -->
         <script>
-            angular.module("theApp",[]).controller("theController",function($scope,$http){
-                $scope.getRand = function(){
-                    $http.get("php/rand.php").success(function(data){
-                        $scope.val = data;
-                    });
+            angular.module("theApp",[]).controller("MainController",function($http){
+                var self = this;
+                self.getRand = function(){
+                    $http.get("php/rand.php").then(function(response){
+                        self.val = response.data;
+                    },function(response){});
                 };
-                $scope.val = 0;
-                $scope.getRand();
+                self.getRand();
             });
         </script>
     </head>
-    <body>
+    <body ng-controller="MainController as mc">
         <ng-include src="'incl/navbar.html'"></ng-include>
         <ng-include src="'incl/alerts.html'"></ng-include>
         <div class="container jwl-normal-container">
             <h1>Random Number</h1>
-            <p style="font-size:144px">{{val}}</p>
-            <p><button type="button" ng-click="getRand()" class="btn btn-primary"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Refresh</button></p>
+            <p style="font-size:144px">{{mc.val}}</p>
+            <p><button type="button" ng-click="mc.getRand()" class="btn btn-primary"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Refresh</button></p>
         </div>
         <ng-include src="'incl/footer.html'"></ng-include>
     </body>
