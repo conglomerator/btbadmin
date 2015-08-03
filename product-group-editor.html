@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>Random Number | BTBADMIN</title>
+        <title>Product Group Editor | BTBADMIN</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- JWL CSS stylesheet -->
@@ -28,12 +28,11 @@
         <script>
             angular.module("theApp",[]).controller("MainController",function($http){
                 var self = this;
-                self.getRand = function(){
-                    $http.get("php/rand.php").then(function(response){
-                        self.val = response.data;
+                self.getProductGroup = function(){
+                    if (self.searchField&&self.searchValue) $http.get("php/get-product-group.php",{params:{field:self.searchField,value:self.searchValue}}).then(function(response){
+                        window.alert(response.data);
                     },function(response){});
                 };
-                self.getRand();
             });
         </script>
     </head>
@@ -41,9 +40,21 @@
         <ng-include src="'incl/navbar.html'"></ng-include>
         <ng-include src="'incl/alerts.html'"></ng-include>
         <div class="container jwl-normal-container">
-            <h1>Random Number</h1>
-            <p style="font-size:144px">{{mc.val}}</p>
-            <p><button type="button" ng-click="mc.getRand()" class="btn btn-primary"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Refresh</button></p>
+            <h1>Product Group Editor</h1>
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <select class="form-control" ng-model="mc.searchField">
+                        <option value="PR_SKU">PR_SKU</option>
+                        <option value="PR_ProductCategory">PR_ProductCategory</option>
+                        <option value="PR_Description">PR_Description</option>
+                        <option value="PR_Keywords">PR_Keywords</option>
+                        <option value="PR_UDSearch0">PR_UDSearch0</option>
+                        <option value="PR_UDSearch1">PR_UDSearch1</option>
+                    </select>
+                </div>
+                <div class="form-group error"><input class="form-control" type="text" ng-model="mc.searchValue"></div>
+                <button type="submit" ng-click="mc.getProductGroup()" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</button>
+            </form>
         </div>
         <ng-include src="'incl/footer.html'"></ng-include>
     </body>
