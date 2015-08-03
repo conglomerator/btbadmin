@@ -12,7 +12,7 @@ $db_handle = new PDO('mysql:host='.MYSQL_HOSTNAME.';dbname=pdgcommerce',MYSQL_US
 $field = $_GET['field'];
 $value = $_GET['value'];
 
-$query = $db_handle->query('SELECT * FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%" ORDER BY PR_SKU DESC');
+if ($field&&$value) $query = $db_handle->query('SELECT * FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%" ORDER BY PR_SKU DESC');
 
 // Send result set
 header('Content-Type: application/json');
