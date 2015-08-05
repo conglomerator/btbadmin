@@ -8,7 +8,7 @@ $db_handle = new PDO('mysql:host='.$_JWL['DB_HOSTNAME'].';dbname='.$_JWL['DB_PDG
 // Execute query
 $columns = array();
 if ($field&&$value) {
-    $query = $db_handle->query('SELECT * FROM PRODUCTS LIMIT 0');
+    $query = $db_handle->query('SELECT * FROM PRODUCTS LIMIT 1');
     
     // Derive columns
     for ($i = 0; $i<$query->columnCount(); $i++) {
