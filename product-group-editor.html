@@ -30,15 +30,17 @@
                 var self = this;
                 self.columns = [];
                 self.results = [];
-                self.getProductGroup = function(){
-                    if (self.searchField&&self.searchValue) $http.get("js/get-group-results.json",{params:{field:self.searchField,value:self.searchValue}}).then(function(response){
-                        self.results = response.data.results;
-                        self.columns = response.data.columns;
+                self.getColumns = function(){
+                    $http.get("js/get-column-results.json").then(function(response){
+                        self.columns = response.data;
                     },function(response){});
                 };
-                self.getShowVar = function(name){
-                    
+                self.getProductGroup = function(){
+                    if (self.searchField&&self.searchValue) $http.get("js/get-group-results.json",{params:{field:self.searchField,value:self.searchValue}}).then(function(response){
+                        self.results = response.data;
+                    },function(response){});
                 };
+                self.getColumns();
             });
         </script>
     </head>
@@ -63,9 +65,11 @@
             </form></p>
             <p><span ng-repeat="(columnName,columnMeta) in mc.columns"><button type="button" ng-click="columnMeta.show = !columnMeta.show" ng-hide="columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button> </span></p>
             <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <td ng-repeat="(columnName,columnMeta) in mc.columns"><button type="button" ng-click="columnMeta.show = !columnMeta.show" ng-show="columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button></td>    
+                    <td ng-repeat="(columnName,columnMeta) in mc.columns" ng-show="columnMeta.show"><button type="button" ng-click="columnMeta.show = !columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button></td>    
                 </tr>
+                </thead>
                 <tr ng-repeat="resultRow in mc.results">
                     <td ng-repeat="(resultCol,resultCell) in resultRow" ng-show="mc.columns[resultCol].show" >{{resultCell}}</td>
                 </tr>

@@ -10,15 +10,8 @@ $value = $_GET['value'];
 
 // Execute query
 $resultSet = array();
-$columns = array();
 if ($field&&$value) {
     $query = $db_handle->query('SELECT * FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%" ORDER BY PR_SKU DESC');
-    
-    // Derive columns
-    for ($i = 0; $i<$query->columnCount(); $i++) {
-        $columnMeta = $query->getColumnMeta($i);
-        $columns[$columnMeta['name']] = array('show'=>false);
-    }
     
     // Fetch results
     $resultSet = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -26,4 +19,4 @@ if ($field&&$value) {
 
 // Send result set
 header('Content-Type: application/json');
-echo(json_encode(array('columns'=>$columns,'results'=>$resultSet)));
+echo(json_encode($resultSet));
