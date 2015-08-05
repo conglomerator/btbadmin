@@ -17,7 +17,7 @@ if ($field&&$value) {
     // Derive columns
     for ($i = 0; $i<$query->columnCount(); $i++) {
         $columnMeta = $query->getColumnMeta($i);
-        array_push($columns, $columnMeta['name']);
+        array_push($columns, array('name'=>$columnMeta['name'],'show'=>false));
     }
     
     // Fetch results

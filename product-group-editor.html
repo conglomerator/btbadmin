@@ -28,10 +28,10 @@
         <script>
             angular.module("theApp",[]).controller("MainController",function($http){
                 var self = this;
-                self.columns = {};
-                self.results = {};
+                self.columns = [];
+                self.results = [];
                 self.getProductGroup = function(){
-                    if (self.searchField&&self.searchValue) $http.get("php/get-group.php",{params:{field:self.searchField,value:self.searchValue}}).then(function(response){
+                    if (self.searchField&&self.searchValue) $http.get("js/get-group-results.json",{params:{field:self.searchField,value:self.searchValue}}).then(function(response){
                         self.results = response.data.results;
                         self.columns = response.data.columns;
                     },function(response){});
@@ -44,7 +44,7 @@
         <ng-include src="'incl/alerts.html'"></ng-include>
         <div class="container jwl-normal-container">
             <h1>Product Group Editor</h1>
-            <form role="form" class="form-inline">
+            <p><form role="form" class="form-inline">
                 <div class="form-group">
                     <select class="form-control" ng-model="mc.searchField">
                         <option value="PR_SKU">PR_SKU</option>
@@ -56,8 +56,8 @@
                     </select>
                 </div>
                 <div class="form-group error"><input class="form-control" type="text" ng-model="mc.searchValue"></div>
-                <button type="submit" ng-click="mc.getProductGroup()" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</button>
-            </form>
+                <button type="submit" ng-click="mc.getProductGroup()" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
+            </form></p>
             <p><span ng-repeat="column in mc.columns"><button type="button" class="btn btn-xs btn-success">{{column}}</button> </span></p>
         </div>
         <ng-include src="'incl/footer.html'"></ng-include>
