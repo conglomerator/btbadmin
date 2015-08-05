@@ -36,6 +36,9 @@
                         self.columns = response.data.columns;
                     },function(response){});
                 };
+                self.getShowVar = function(name){
+                    
+                };
             });
         </script>
     </head>
@@ -58,7 +61,15 @@
                 <div class="form-group error"><input class="form-control" type="text" ng-model="mc.searchValue"></div>
                 <button type="submit" ng-click="mc.getProductGroup()" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
             </form></p>
-            <p><span ng-repeat="column in mc.columns"><button type="button" class="btn btn-xs btn-success">{{column}}</button> </span></p>
+            <p><span ng-repeat="column in mc.columns"><button type="button" ng-click="column.show = !column.show" ng-hide="column.show" class="btn btn-xs btn-success">{{column.name}}</button> </span></p>
+            <table class="table table-bordered">
+                <tr>
+                    <td ng-repeat="column in mc.columns"><button type="button" ng-click="column.show = !column.show" ng-show="column.show" class="btn btn-xs btn-success">{{column.name}}</button></td>    
+                </tr>
+                <tr ng-repeat="resultRow in mc.results">
+                    <td ng-repeat="(resultCol,resultCell) in resultRow" ng-show="mc.getShowVar(resultCol)" >{{resultCell}}</td>
+                </tr>
+            </table>
         </div>
         <ng-include src="'incl/footer.html'"></ng-include>
     </body>
