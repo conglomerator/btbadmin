@@ -61,13 +61,13 @@
                 <div class="form-group error"><input class="form-control" type="text" ng-model="mc.searchValue"></div>
                 <button type="submit" ng-click="mc.getProductGroup()" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
             </form></p>
-            <p><span ng-repeat="column in mc.columns"><button type="button" ng-click="column.show = !column.show" ng-hide="column.show" class="btn btn-xs btn-success">{{column.name}}</button> </span></p>
+            <p><span ng-repeat="(columnName,columnMeta) in mc.columns"><button type="button" ng-click="columnMeta.show = !columnMeta.show" ng-hide="columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button> </span></p>
             <table class="table table-bordered">
                 <tr>
-                    <td ng-repeat="column in mc.columns"><button type="button" ng-click="column.show = !column.show" ng-show="column.show" class="btn btn-xs btn-success">{{column.name}}</button></td>    
+                    <td ng-repeat="(columnName,columnMeta) in mc.columns"><button type="button" ng-click="columnMeta.show = !columnMeta.show" ng-show="columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button></td>    
                 </tr>
                 <tr ng-repeat="resultRow in mc.results">
-                    <td ng-repeat="(resultCol,resultCell) in resultRow" ng-show="mc.getShowVar(resultCol)" >{{resultCell}}</td>
+                    <td ng-repeat="(resultCol,resultCell) in resultRow" ng-show="mc.columns[resultCol].show" >{{resultCell}}</td>
                 </tr>
             </table>
         </div>
