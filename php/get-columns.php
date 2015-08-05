@@ -7,15 +7,13 @@ $db_handle = new PDO('mysql:host='.$_JWL['DB_HOSTNAME'].';dbname='.$_JWL['DB_PDG
 
 // Execute query
 $columns = array();
-if ($field&&$value) {
-    $query = $db_handle->query('SELECT * FROM PRODUCTS LIMIT 1');
+$query = $db_handle->query('SELECT * FROM PRODUCTS LIMIT 1');
     
     // Derive columns
     for ($i = 0; $i<$query->columnCount(); $i++) {
         $columnMeta = $query->getColumnMeta($i);
         $columns[$columnMeta['name']] = array('show'=>false);
     }
-}
 
 // Send result set
 header('Content-Type: application/json');
