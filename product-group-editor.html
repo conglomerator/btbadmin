@@ -28,9 +28,12 @@
         <script>
             angular.module("theApp",[]).controller("MainController",function($http){
                 var self = this;
+                self.columns = {};
+                self.results = {};
                 self.getProductGroup = function(){
-                    if (self.searchField&&self.searchValue) $http.get("php/get-product-group.php",{params:{field:self.searchField,value:self.searchValue}}).then(function(response){
-                        window.alert(response.data);
+                    if (self.searchField&&self.searchValue) $http.get("php/get-group.php",{params:{field:self.searchField,value:self.searchValue}}).then(function(response){
+                        self.results = response.data.results;
+                        self.columns = response.data.columns;
                     },function(response){});
                 };
             });
@@ -55,6 +58,7 @@
                 <div class="form-group error"><input class="form-control" type="text" ng-model="mc.searchValue"></div>
                 <button type="submit" ng-click="mc.getProductGroup()" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</button>
             </form>
+            <p><span ng-repeat="column in mc.columns"><button type="button" class="btn btn-xs btn-success">{{column}}</button> </span></p>
         </div>
         <ng-include src="'incl/footer.html'"></ng-include>
     </body>
