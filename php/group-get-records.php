@@ -7,19 +7,27 @@ $db_handle = new PDO('mysql:host='.$_JWL['DB_HOSTNAME'].';dbname='.$_JWL['DB_PDG
 
 $field = $_GET['field'];
 $value = $_GET['value'];
-$strict = $_GET['strict'];
+$isStrict = $_GET['isStrict'];
 
-// Execute query
-$resultSet = array();
+// Build column string from config
+$columnString = implode(',',array_keys($_JWL['GROUP_COLUMNS']));
+
+$recordSet = array();
 if ($field&&$value) {
-    $queryString = 'SELECT '.$_JWL['GROUP_EDIT_COLUMNS'].' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%"';
-    if ($strict=='true') $queryString = 'SELECT '.$_JWL['GROUP_EDIT_COLUMNS'].' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' = "' . mysql_escape_string($value) . '"';
-    $query = $db_handle->query();
     
-    // Fetch results
-    $resultSet = $query->fetchAll(PDO::FETCH_ASSOC);
+// Build query string
+    $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%"';
+    if ($isStrict=='true') $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' = "' . mysql_escape_string($value) . '"';
+    $query = $db_handle->query($queryString);
+    
+// Fetch records
+    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+        $recordIndex = $row['PR_ProductID'];
+        unset($row['PR_ProductID']);
+        $recordSet[$recordIndex] = $row;
+    };
 }
 
 // Send result set
 header('Content-Type: application/json');
-echo(json_encode($resultSet));
+echo(json_encode($recordSet));
