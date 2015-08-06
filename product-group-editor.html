@@ -31,14 +31,25 @@
                 self.columns = [];
                 self.results = [];
                 self.getColumns = function(){
-                    $http.get("js/get-columns-results.json").then(function(response){
+                    $http.get("php/get-columns.php").then(function(response){
                         self.columns = response.data;
                     },function(response){});
                 };
                 self.getProductGroup = function(){
-                    if (self.searchField&&self.searchValue) $http.get("js/get-group-results.json",{params:{field:self.searchField,value:self.searchValue}}).then(function(response){
+                    if (self.searchField&&self.searchValue) $http.get("php/get-group.php",{params:{field:self.searchField,strict:self.strict,value:self.searchValue}}).then(function(response){
                         self.results = response.data;
                     },function(response){});
+                };
+                self.changeSearch = function(k,v){
+                    self.searchField = k;
+                    self.strict = "true";
+                    self.searchValue = v;
+                    self.getProductGroup();
+                };
+                self.batchEdit = function(k,v){
+                    for (var i = 0; i<self.results.length; i++) {
+                        self.results[i][k] = v;
+                    };
                 };
                 self.getColumns();
             });
@@ -52,12 +63,13 @@
             <p><form role="form" class="form-inline">
                 <div class="form-group">
                     <select class="form-control" ng-model="mc.searchField">
-                        <option value="PR_SKU">PR_SKU</option>
-                        <option value="PR_ProductCategory">PR_ProductCategory</option>
-                        <option value="PR_Description">PR_Description</option>
-                        <option value="PR_Keywords">PR_Keywords</option>
-                        <option value="PR_UDSearch0">PR_UDSearch0</option>
-                        <option value="PR_UDSearch1">PR_UDSearch1</option>
+                        <option ng-repeat="(columnName,columnMeta) in mc.columns" value="{{columnName}}">{{columnName}}</option>
+                    </select>                    
+                </div>
+                <div class="form-group">
+                    <select class="form-control" ng-model="mc.strict">
+                        <option value="true">equals</option>
+                        <option value="false">contains</option>
                     </select>
                 </div>
                 <div class="form-group"><input class="form-control" type="text" ng-model="mc.searchValue"></div>
@@ -65,23 +77,16 @@
             </form></p>
             <p><span ng-repeat="(columnName,columnMeta) in mc.columns"><button type="button" ng-click="columnMeta.show = !columnMeta.show" ng-hide="columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button> </span></p>
             <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <td ng-repeat="(columnName,columnMeta) in mc.columns" ng-show="columnMeta.show"><button type="button" ng-click="columnMeta.show = !columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button></td>    
-                </tr>
-                </thead>
-                <tr ng-repeat="resultRow in mc.results">
+                <thead><tr><th ng-repeat="(columnName,columnMeta) in mc.columns" ng-show="columnMeta.show"><button type="button" ng-click="columnMeta.show = !columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button><button type="button" ng-click="mc.options.sortOrder = columnName"  class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></button><button type="button" ng-click="mc.options.sortOrder = '-'+columnName" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></button></th></tr></thead>
+                <tr ng-repeat="resultRow in mc.results | orderBy: mc.options.sortOrder">
                     <td ng-repeat="(resultCol,resultCell) in resultRow" ng-show="mc.columns[resultCol].show">
-                        <div ng-click="editing = true">
-                            <a>{{resultCell}}</a>&nbsp;
-                        </div>
-                        <div style="position:absolute" ng-show="editing">
-                            <form role="form" class="form-inline">
+                        <div ng-click="editing = true"><a>{{resultCell}}</a>&nbsp;</div>
+                        <div style="position:absolute" ng-show="editing"><form role="form" class="form-inline">
                                 <div class="form-group"><input class="form-control" type="text" ng-model="resultCell"></div>
-                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
+                                <button type="button" ng-click="mc.changeSearch(resultCol,resultCell)" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>     
+                                <button type="button" ng-click="mc.batchEdit(resultCol,resultCell)" class="btn btn-default"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
                                 <button type="submit" class="btn btn-primary" ng-click="editing = false"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
-                            </form>
-                        </div>
+                        </form></div>
                     </td>
                 </tr>
             </table>

@@ -11,7 +11,7 @@ $value = $_GET['value'];
 // Execute query
 $resultSet = array();
 if ($field&&$value) {
-    $query = $db_handle->query('SELECT * FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%" ORDER BY PR_SKU DESC');
+    $query = $db_handle->query('SELECT '.$_JWL['GROUP_EDIT_COLUMNS'].' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%" ORDER BY PR_SKU DESC');
     
     // Fetch results
     $resultSet = $query->fetchAll(PDO::FETCH_ASSOC);
