@@ -7,16 +7,16 @@ $_JWL = array(
     'DB_USERNAME'       =>'cocheese_1911',
     'DB_PASSWORD'       =>'',
     'GROUP_COLUMNS'     =>array(
-        'PR_SKU'                    =>array('initiallyVisible'=>true),
-        'PR_ProductCategory'        =>array('initiallyVisible'=>true),
-        'PR_Description'            =>array('initiallyVisible'=>true),
+        'PR_SKU'                    =>array('isVisible'=>true),
+        'PR_ProductCategory'        =>array('isVisible'=>true),
+        'PR_Description'            =>array('isVisible'=>true),
         'PR_Keywords'               =>array(),
         'PR_Weight'                 =>array(),
         'PR_DispBasketCrossSale'    =>array(),
         'PR_CrossSales'             =>array(),
         'PR_DispTemplateCrossSale'  =>array(),
         'PR_CrossSaleTemplate'      =>array(),
-        'PR_UDSearch0'              =>array('initiallyVisible'=>true),
+        'PR_UDSearch0'              =>array('isVisible'=>true),
         'PR_UDSearch1'              =>array()
     )
 );

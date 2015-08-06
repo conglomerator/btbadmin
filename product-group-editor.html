@@ -26,13 +26,13 @@
         <script src="js/jwl.js"></script>
         <!-- This page's NG app/controller -->
         <script>
-            angular.module("theApp",[]).controller("MainController",function($http){
+            angular.module("theApp",[]).controller("theController",function($http){
                 var self = this;
                 self.columns = [];
                 self.originalResults = [];
                 self.results = [];
                 self.getColumns = function(){
-                    $http.get("js/get-columns-results.json").then(function(response){
+                    $http.get("json/group-get-columns-test.json").then(function(response){
                         self.columns = response.data;
                     },function(response){});
                 };
@@ -69,28 +69,27 @@
             });
         </script>
     </head>
-    <body ng-controller="MainController as mc">
+    <body ng-controller="theController as main">
         <ng-include src="'incl/navbar.html'"></ng-include>
         <ng-include src="'incl/alerts.html'"></ng-include>
         <div class="container jwl-normal-container">
             <h1>Product Group Editor</h1>
             <p><form role="form" class="form-inline">
                 <div class="form-group">
-                    <select class="form-control" ng-model="mc.searchField">
-                        <option ng-repeat="(columnName,columnMeta) in mc.columns" value="{{columnName}}">{{columnName}}</option>
+                    <select class="form-control" ng-model="main.searchField">
+                        <option ng-repeat="(columnName,columnMeta) in main.columns" value="{{columnName}}">{{columnName}}</option>
                     </select>                    
                 </div>
                 <div class="form-group">
-                    <select class="form-control" ng-model="mc.strict">
-                        <option value="true">equals</option>
-                        <option value="false">contains</option>
+                    <select class="form-control" ng-model="main.searchIsStrict">
+                        <option value="1">equals</option>
+                        <option value="0">contains</option>
                     </select>
                 </div>
-                <div class="form-group"><input class="form-control" type="text" ng-model="mc.searchValue"></div>
-                <button type="submit" ng-click="mc.getProductGroup()" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
+                <div class="form-group"><input class="form-control" type="text" ng-model="main.searchValue"></div>
+                <button type="submit" ng-click="main.getProductGroup()" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
             </form></p>
-            <p><span ng-repeat="(columnName,columnMeta) in mc.columns"><button type="button" ng-click="columnMeta.show = !columnMeta.show" ng-hide="columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button> </span></p>
-            <p><button type="submit" ng-click="mc.save()" class="btn btn-primary">Save</button></p>
+            <p><button type="button" ng-repeat="(columnName,columnMeta) in main.columns" ng-click="columnMeta.isVisible = !columnMeta.isVisible" ng-hide="columnMeta.isVisible" class="btn btn-xs btn-success">{{columnName}}</button></p>
             <table class="table table-bordered">
                 <thead><tr><th ng-repeat="(columnName,columnMeta) in mc.columns" ng-show="columnMeta.show"><button type="button" ng-click="columnMeta.show = !columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button><button type="button" ng-click="mc.options.sortOrder = columnName"  class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></button><button type="button" ng-click="mc.options.sortOrder = '-'+columnName" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></button></th></tr></thead>
                 <tr ng-repeat="resultRow in mc.results | orderBy: mc.options.sortOrder">
