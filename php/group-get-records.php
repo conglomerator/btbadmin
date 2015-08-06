@@ -7,11 +7,14 @@ $db_handle = new PDO('mysql:host='.$_JWL['DB_HOSTNAME'].';dbname='.$_JWL['DB_PDG
 
 $field = $_GET['field'];
 $value = $_GET['value'];
+$strict = $_GET['strict'];
 
 // Execute query
 $resultSet = array();
 if ($field&&$value) {
-    $query = $db_handle->query('SELECT '.$_JWL['GROUP_EDIT_COLUMNS'].' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%" ORDER BY PR_SKU DESC');
+    $queryString = 'SELECT '.$_JWL['GROUP_EDIT_COLUMNS'].' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%"';
+    if ($strict=='true') $queryString = 'SELECT '.$_JWL['GROUP_EDIT_COLUMNS'].' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' = "' . mysql_escape_string($value) . '"';
+    $query = $db_handle->query();
     
     // Fetch results
     $resultSet = $query->fetchAll(PDO::FETCH_ASSOC);

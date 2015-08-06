@@ -29,15 +29,17 @@
             angular.module("theApp",[]).controller("MainController",function($http){
                 var self = this;
                 self.columns = [];
+                self.originalResults = [];
                 self.results = [];
                 self.getColumns = function(){
-                    $http.get("php/get-columns.php").then(function(response){
+                    $http.get("js/get-columns-results.json").then(function(response){
                         self.columns = response.data;
                     },function(response){});
                 };
                 self.getProductGroup = function(){
-                    if (self.searchField&&self.searchValue) $http.get("php/get-group.php",{params:{field:self.searchField,strict:self.strict,value:self.searchValue}}).then(function(response){
+                    if (self.searchField&&self.searchValue) $http.get("js/get-group-results.json",{params:{field:self.searchField,strict:self.strict,value:self.searchValue}}).then(function(response){
                         self.results = response.data;
+                        self.originalResults = angular.copy(self.results);
                     },function(response){});
                 };
                 self.changeSearch = function(k,v){
@@ -50,6 +52,18 @@
                     for (var i = 0; i<self.results.length; i++) {
                         self.results[i][k] = v;
                     };
+                };
+                self.save = function(){
+                    var postParams = {};
+                    for (var i = 0; i<self.results.length; i++) {
+                        var k = self.results[i]["PR_ProductID"];
+                        for (var j in self.results[i]) {
+                            if (self.results[i][j]!=self.originalResults[i][j]) postParams[k+"__"+j] = self.results[i][j];
+                       };
+                    };
+                    $http.post("php/update.php",{params:postParams}).then(function(response){
+                        window.alert("!");
+                    },function(response){})
                 };
                 self.getColumns();
             });
@@ -76,11 +90,13 @@
                 <button type="submit" ng-click="mc.getProductGroup()" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
             </form></p>
             <p><span ng-repeat="(columnName,columnMeta) in mc.columns"><button type="button" ng-click="columnMeta.show = !columnMeta.show" ng-hide="columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button> </span></p>
+            <p><button type="submit" ng-click="mc.save()" class="btn btn-primary">Save</button></p>
             <table class="table table-bordered">
                 <thead><tr><th ng-repeat="(columnName,columnMeta) in mc.columns" ng-show="columnMeta.show"><button type="button" ng-click="columnMeta.show = !columnMeta.show" class="btn btn-xs btn-success">{{columnName}}</button><button type="button" ng-click="mc.options.sortOrder = columnName"  class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></button><button type="button" ng-click="mc.options.sortOrder = '-'+columnName" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></button></th></tr></thead>
                 <tr ng-repeat="resultRow in mc.results | orderBy: mc.options.sortOrder">
                     <td ng-repeat="(resultCol,resultCell) in resultRow" ng-show="mc.columns[resultCol].show">
-                        <div ng-click="editing = true"><a>{{resultCell}}</a>&nbsp;</div>
+                        <div ng-hide="mc.columns[resultCol].readonly" ng-click="editing = true"><a>{{resultCell}}</a>&nbsp;</div>
+                        <div ng-hide="!mc.columns[resultCol].readonly">{{resultCell}}</div>
                         <div style="position:absolute" ng-show="editing"><form role="form" class="form-inline">
                                 <div class="form-group"><input class="form-control" type="text" ng-model="resultCell"></div>
                                 <button type="button" ng-click="mc.changeSearch(resultCol,resultCell)" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>     
@@ -90,6 +106,7 @@
                     </td>
                 </tr>
             </table>
+            <p><button type="submit" ng-click="mc.save()" class="btn btn-primary">Save</button></p>
         </div>
         <ng-include src="'incl/footer.html'"></ng-include>
     </body>

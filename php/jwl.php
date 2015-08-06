@@ -1,4 +1,4 @@
 <?php
 
-// Require config file; need to specify path
-//require_once('');
+// Require config file
+require_once('config.php');
