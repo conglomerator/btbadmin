@@ -33,12 +33,12 @@
                 self.records = [];
                 self.options = [];
                 self.getColumns = function(){
-                    $http.get("json/group-get-columns-test.json").then(function(response){
+                    $http.get("php/group-get-columns.php").then(function(response){
                         self.columns = response.data;
                     },function(response){});
                 };
                 self.getRecords = function(){
-                    if (self.search.field&&self.search.value) $http.get("json/group-get-records-test.json",{params:{field:self.search.field,isStrict:self.search.isStrict,value:self.search.value}}).then(function(response){
+                    if (self.search.field&&self.search.value) $http.get("php/group-get-records.php",{params:{field:self.search.field,isStrict:self.search.isStrict,value:self.search.value}}).then(function(response){
                         self.records = response.data;
                     },function(response){});
                 };
@@ -55,16 +55,16 @@
                     };
                 };
                 self.save = function(){
-                    var postParams = {};
-                    for (var i = 0; i<self.results.length; i++) {
-                        var k = self.results[i]["PR_ProductID"];
-                        for (var j in self.results[i]) {
-                            if (self.results[i][j]!=self.originalResults[i][j]) postParams[k+"__"+j] = self.results[i][j];
-                       };
-                    };
-                    $http.post("php/update.php",{params:postParams}).then(function(response){
-                        window.alert("!");
-                    },function(response){})
+//                    var postParams = {};
+//                    for (var i = 0; i<self.results.length; i++) {
+//                        var k = self.results[i]["PR_ProductID"];
+//                        for (var j in self.results[i]) {
+//                            if (self.results[i][j]!=self.originalResults[i][j]) postParams[k+"__"+j] = self.results[i][j];
+//                       };
+//                   };
+//                    $http.post("php/group-update.php",{params:postParams}).then(function(response){
+//                        window.alert("!");
+//                    },function(response){})
                 };
                 self.getColumns();
             });
