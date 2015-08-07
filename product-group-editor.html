@@ -26,32 +26,32 @@
         <script src="js/jwl.js"></script>
         <!-- This page's NG app/controller -->
         <script>
-            angular.module("theApp",[]).controller("theController",function($http){
+            angular.module("theApp",[]).controller("theController",function($window,$http){
                 var self = this;
                 self.columns = [];
                 self.search = [];
-                self.originalResults = [];
-                self.results = [];
+                self.records = [];
+                self.options = [];
                 self.getColumns = function(){
                     $http.get("json/group-get-columns-test.json").then(function(response){
                         self.columns = response.data;
                     },function(response){});
                 };
                 self.getRecords = function(){
-                    if (self.search.field&&self.search.value) $http.get("json/get-group-results.json",{params:{field:self.searchField,strict:self.strict,value:self.searchValue}}).then(function(response){
-                        self.results = response.data;
-                        self.originalResults = angular.copy(self.results);
+                    if (self.search.field&&self.search.value) $http.get("json/group-get-records-test.json",{params:{field:self.search.field,isStrict:self.search.isStrict,value:self.search.value}}).then(function(response){
+                        self.records = response.data;
                     },function(response){});
                 };
-                self.changeSearch = function(k,v){
-                    self.searchField = k;
-                    self.strict = "true";
-                    self.searchValue = v;
-                    self.getProductGroup();
+                self.refineSearch = function(col,cell){
+                    self.search.field = col;
+                    self.search.isStrict = "true";
+                    self.search.value = cell;
+                    self.getRecords();
                 };
-                self.batchEdit = function(k,v){
-                    for (var i = 0; i<self.results.length; i++) {
-                        self.results[i][k] = v;
+                self.batchEdit = function(col,cell){
+                    var rows = Object.keys(self.records);
+                    for (var i in rows) {
+                        self.records[rows[i]][col] = cell;
                     };
                 };
                 self.save = function(){
@@ -85,30 +85,30 @@
                 <div class="form-group">
                     <select class="form-control" ng-model="main.search.isStrict">
                         <option value="true">equals</option>
-                        <option value="false">contains</option>
+                        <option value="">contains</option>
                     </select>
                 </div>
                 <div class="form-group"><input class="form-control" type="text" ng-model="main.search.value"></div>
-                <button type="submit" ng-click="main.getProductGroup()" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
+                <button type="submit" ng-click="main.getRecords()" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
             </form></p>
             <h2>Available Columns</h2>
-            <p><button type="button" ng-repeat="(columnName,columnMeta) in main.columns" ng-click="columnMeta.isVisible = !columnMeta.isVisible" ng-hide="columnMeta.isVisible" class="btn btn-xs btn-default">{{columnName}}</button></p>
+            <p><button type="button" ng-repeat="(columnName,columnMeta) in main.columns" ng-click="columnMeta.isVisible = !columnMeta.isVisible" ng-hide="columnMeta.isVisible" class="btn btn-xs btn-success">{{columnName}}</button></p>
             <h2>Current Recordset</h2>
             <table class="table table-bordered">
-                <thead><tr><th ng-repeat="(columnName,columnMeta) in main.columns" ng-show="columnMeta.isVisible"><button type="button" ng-click="columnMeta.isVisible = !columnMeta.isVisible" class="btn btn-xs btn-default">{{columnName}}</button><button type="button" ng-click="main.options.sortOrder = columnName"  class="btn btn-xs btn-default"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></button><button type="button" ng-click="main.options.sortOrder = '-'+columnName" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></button></th></tr></thead>
-<!--                <tr ng-repeat="resultRow in mc.results | orderBy: mc.options.sortOrder">
-                    <td ng-repeat="(resultCol,resultCell) in resultRow" ng-show="mc.columns[resultCol].show">
-                        <div ng-hide="mc.columns[resultCol].readonly" ng-click="editing = true"><a>{{resultCell}}</a>&nbsp;</div>
-                        <div ng-hide="!mc.columns[resultCol].readonly">{{resultCell}}</div>
+                <thead><tr><th ng-repeat="(columnName,columnMeta) in main.columns" ng-show="columnMeta.isVisible"><button type="button" ng-click="columnMeta.isVisible = !columnMeta.isVisible" class="btn btn-xs btn-success">{{columnName}}</button><!--<button type="button" ng-click="main.options.sortOrder = columnName"  class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></button><button type="button" ng-click="main.options.sortOrder = '-'+columnName" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></button>--></th></tr></thead>
+                <tr ng-repeat="row in main.records | orderBy: main.options.sortOrder">
+                    <td ng-repeat="(col,cell) in row" ng-show="main.columns[col].isVisible">
+                        <div ng-hide="main.columns[col].readonly" ng-click="editing = true"><a>{{cell}}</a>&nbsp;</div>
+                        <div ng-hide="!main.columns[col].readonly">{{cell}}</div>
                         <div style="position:absolute" ng-show="editing"><form role="form" class="form-inline">
-                                <div class="form-group"><input class="form-control" type="text" ng-model="resultCell"></div>
-                                <button type="button" ng-click="mc.changeSearch(resultCol,resultCell)" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>     
-                                <button type="button" ng-click="mc.batchEdit(resultCol,resultCell)" class="btn btn-default"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
+                                <div class="form-group"><input class="form-control" type="text" ng-model="cell"></div>
                                 <button type="submit" class="btn btn-primary" ng-click="editing = false"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                                <button type="button" ng-click="editing = false; main.batchEdit(col,cell)" class="btn btn-primary"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
+                                <button type="button" ng-click="editing = false; main.refineSearch(col,cell)" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>     
                         </form></div>
                     </td>
                 </tr>
--->            </table>
+            </table>
         </div>
         <ng-include src="'incl/footer.html'"></ng-include>
     </body>

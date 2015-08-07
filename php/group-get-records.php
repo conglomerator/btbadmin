@@ -13,11 +13,11 @@ $isStrict = $_GET['isStrict'];
 $columnString = implode(',',array_keys($_JWL['GROUP_COLUMNS']));
 
 $recordSet = array();
-if ($field&&$value) {
+if (in_array($field,array_keys($_JWL['GROUP_COLUMNS']))&&$value) {
     
 // Build query string
     $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' LIKE "%' . mysql_escape_string($value) . '%"';
-    if ($isStrict=='true') $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' = "' . mysql_escape_string($value) . '"';
+    if ($isStrict) $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE ' . mysql_escape_string($field) . ' = "' . mysql_escape_string($value) . '"';
     $query = $db_handle->query($queryString);
     
 // Fetch records
