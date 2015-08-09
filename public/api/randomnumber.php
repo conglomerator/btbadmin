@@ -1,7 +1,7 @@
 <?php
 
-// Load JWL PHP
-require_once("jwl.php");
+// Load common PHP
+require_once("common.php");
 
 // Generate random number
 $randNum = mt_rand(0,100000);
