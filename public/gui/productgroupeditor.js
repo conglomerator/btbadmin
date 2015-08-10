@@ -36,7 +36,7 @@ angular.module('ProductGroupEditor', ['ngRoute', 'Common']).
             },function(response){});                                                                                 
         };                                                                                                           
         self.getRecords = function(){                                                                                
-            if (self.search.field&&self.search.value) $http.get('api/productrecords.php',{params:{field:self.search.field,isStrict:self.search.isStrict,value:self.search.value}}).then(function(response){                                    
+            if (self.search.field&&self.search.value) $http.get('api/productrecords.test.json',{params:{field:self.search.field,isStrict:self.search.isStrict,value:self.search.value}}).then(function(response){                                    
                 self.records = response.data;                                                                        
             },function(response){});                                                                                 
         }; 
