@@ -1,6 +1,6 @@
 <?php
 
-$_JWL = array(
+$_CONFIG = array(
     'DB_HOSTNAME'       =>'localhost',
     'DB_PDGDBNAME'      =>'cocheese_pdgcommerce',
     'DB_JWLDBNAME'      =>'cocheese_jwl',
@@ -18,5 +18,6 @@ $_JWL = array(
         'PR_CrossSaleTemplate'      =>array(),
         'PR_UDSearch0'              =>array('isVisible'=>true),
         'PR_UDSearch1'              =>array()
-    )
+    ),
+    'LOG_PATH'          =>''
 );

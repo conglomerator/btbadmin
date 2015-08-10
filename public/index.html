@@ -18,6 +18,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js"></script>
         <script src="gui/randomnumbertest.js"></script>
         <script src="gui/inputbindingtest.js"></script>
+        <script src="gui/productgroupeditor.js"></script>
         <script src="gui/home.js"></script>
         <script src="gui/error.js"></script>
         <script>
@@ -27,7 +28,7 @@ $(document).on('click','.navbar-collapse.in',function(e) {
         $(this).collapse('hide');
     }
 });
-angular.module('Main', ['ngRoute', 'Common', 'InputBindingTest', 'RandomNumberTest', 'Home', 'Error']).
+angular.module('Main', ['ngRoute', 'Common', 'InputBindingTest', 'RandomNumberTest', 'Home', 'Error', 'ProductGroupEditor']).
     constant('MainProperties', {
         version: 'X.X.X',
     }).
