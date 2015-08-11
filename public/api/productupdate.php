@@ -11,17 +11,33 @@ require_once("common.php");
 
 $db_handle = new PDO('mysql:host='.$_CONFIG['DB_HOSTNAME'].';dbname='.$_CONFIG['DB_PDGDBNAME'], $_CONFIG['DB_USERNAME'], $_CONFIG['DB_PASSWORD']);
 
-$db_handle->beginTransaction();
 $affected_records = 0;
 
+$rejected_args = 0;
+$args = array();
 foreach ($_POST as $key => $value) {
-    if (preg_match('/^[\w\d]+__[\d]+$/', $key) !== false) {
-        list($field, $id) = explode('__', $key);
-        if (in_array($field,array_keys($_CONFIG['GROUP_COLUMNS']))) $affected_records = $affected_records + $db_handle->exec('UPDATE PRODUCTS SET '.mysql_escape_string($field).' = "'.mysql_escape_string($value).'" WHERE PR_ProductID = '.mysql_escape_string($id));
-    }
-}
+    if (!preg_match('/^[\w\d]+__[\d]+$/',$key)) {
+        $rejected_args++;
+        continue;
+    };
+    list($field, $id) = explode('__', $key);
+    if (!in_array($field,array_keys($_CONFIG['GROUP_COLUMNS']))) {
+        $rejected_args++;
+        continue;        
+    };
+    $sanitized_field = filter_var($field,FILTER_SANITIZE_STRING);
+    $sanitized_id = filter_var($id,FILTER_SANITIZE_STRING);
+    $sanitized_value = filter_var($value,FILTER_SANITIZE_STRING);
+    array_push($args,array($sanitized_field,$sanitized_value,$sanitized_id));
+};
 
-$db_handle->commit();
+$stmt = $db_handle->prepare('UPDATE PRODUCTS SET ? = ? WHERE PR_ProductID = ?');
+foreach ($args as $arg) {
+    $stmt->bindParam(1,$arg[0]);
+    $stmt->bindParam(2,$arg[1]);
+    $stmt->bindParam(3,$arg[2]);
+    $stmt->execute();
+};
 
 // Send umber of affected records
 header('Content-Type: application/json');
