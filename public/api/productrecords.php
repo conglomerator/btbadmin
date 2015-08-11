@@ -16,8 +16,11 @@ $recordSet = array();
 if (in_array($field,array_keys($_CONFIG['GROUP_COLUMNS']))&&$value) {
     
 // Build query string
-    $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE :field LIKE %:value%';
-    if ($isStrict) $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE :field = :value';
+    $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE :field = :value';
+    if (!$isStrict) {
+        $value = '%'.$value.'%';
+        $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE :field LIKE :value';
+    };
     $query = $db_handle->prepare($queryString);
     $query->bindParam(':field',$field);
     $query->bindParam(':value',$value);
