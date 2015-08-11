@@ -31,12 +31,12 @@ angular.module('ProductGroupEditor', ['ngRoute', 'Common']).
             self.getRecords();                                                                                       
         }; 
         self.getColumns = function(){
-            $http.get('api/productcolumns.test.json').then(function(response){
+            $http.get('api/productcolumns.php').then(function(response){
                 self.columns = response.data;                                                                        
             },function(response){});                                                                                 
         };                                                                                                           
         self.getRecords = function(){                                                                                
-            if (self.search.field&&self.search.value) $http.get('api/productrecords.test.json',{params:{field:self.search.field,isStrict:self.search.isStrict,value:self.search.value}}).then(function(response){                                    
+            if (self.search.field&&self.search.value) $http.get('api/productrecords.php',{params:{field:self.search.field,isStrict:self.search.isStrict,value:self.search.value}}).then(function(response){                                    
                 self.records = response.data;                                                                        
             },function(response){});                                                                                 
         }; 
