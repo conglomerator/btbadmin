@@ -16,11 +16,11 @@ $recordSet = array();
 if (in_array($field,array_keys($_CONFIG['GROUP_COLUMNS']))&&$value) {
     
 // Build query string
-    $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE ? LIKE "%?%"';
-    if ($isStrict) $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE ? = ?';
+    $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE :field LIKE %:value%';
+    if ($isStrict) $queryString = 'SELECT PR_ProductID,'.$columnString.' FROM PRODUCTS WHERE :field = :value';
     $query = $db_handle->prepare($queryString);
-    $query->bindParam(1,$field);
-    $query->bindParam(2,$value);
+    $query->bindParam(':field',$field);
+    $query->bindParam(':value',$value);
     $query->execute();
     
 // Fetch records
