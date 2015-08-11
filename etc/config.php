@@ -7,17 +7,17 @@ $_CONFIG = array(
     'DB_USERNAME'       =>'cocheese_1911',
     'DB_PASSWORD'       =>'',
     'GROUP_COLUMNS'     =>array(
-        'PR_SKU'                    =>array('isVisible'=>true),
-        'PR_ProductCategory'        =>array('isVisible'=>true),
-        'PR_Description'            =>array('isVisible'=>true),
-        'PR_Keywords'               =>array(),
-        'PR_Weight'                 =>array(),
-        'PR_DispBasketCrossSale'    =>array(),
-        'PR_CrossSales'             =>array(),
-        'PR_DispTemplateCrossSale'  =>array(),
-        'PR_CrossSaleTemplate'      =>array(),
-        'PR_UDSearch0'              =>array('isVisible'=>true),
-        'PR_UDSearch1'              =>array()
+        'PR_SKU'                    =>array('readonly'=>false,'isVisible'=>true),
+        'PR_ProductCategory'        =>array('readonly'=>false,'isVisible'=>true),
+        'PR_Description'            =>array('readonly'=>false,'isVisible'=>true),
+        'PR_Keywords'               =>array('readonly'=>false),
+        'PR_Weight'                 =>array('readonly'=>false),
+        'PR_DispBasketCrossSale'    =>array('readonly'=>false),
+        'PR_CrossSales'             =>array('readonly'=>false),
+        'PR_DispTemplateCrossSale'  =>array('readonly'=>false),
+        'PR_CrossSaleTemplate'      =>array('readonly'=>false),
+        'PR_UDSearch0'              =>array('readonly'=>false,'isVisible'=>true),
+        'PR_UDSearch1'              =>array('readonly'=>false)
     ),
     'LOG_PATH'          =>''
 );

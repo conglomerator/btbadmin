@@ -30,9 +30,9 @@ and open the template in the editor.
         <thead><tr><th ng-repeat="(columnName,columnMeta) in main.columns" ng-show="columnMeta.isVisible"><button type="button" ng-click="columnMeta.isVisible = !columnMeta.isVisible" class="btn btn-xs btn-success">{{columnName}}</button><!--<button type="button" ng-click="main.options.sortOrder = columnName"  class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></button><button type="button" ng-click="main.options.sortOrder = '-'+columnName" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></button>--></th></tr></thead>  
         <tr ng-repeat="row in main.records | orderBy: main.options.sortOrder">                                       
             <td ng-repeat="(columnName,columnMeta) in main.columns" ng-show="columnMeta.isVisible">                                 
-                <div ng-hide="columnMeta.readonly" ng-click="editing = true"><a>{{row[columnName]}}</a>&nbsp;</div>      
-                <div ng-hide="!columnMeta.readonly">{{row[columnName]}}</div>                                            
-                <div style="position:absolute" ng-show="editing"><form role="form" class="form-inline">              
+                <div ng-if="columnMeta.readonly">{{row[columnName]}}</div>                                            
+                <div ng-if="!columnMeta.readonly" ng-click="editing = true"><a>{{row[columnName]}}</a>&nbsp;</div>      
+                <div ng-if="!columnMeta.readonly" style="position:absolute" ng-show="editing"><form role="form" class="form-inline">              
                         <div class="form-group"><input class="form-control" type="text" ng-model="row[columnName]"></div>       
                         <button type="submit" class="btn btn-primary" ng-click="editing = false"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>                                                                         
                         <button type="button" ng-click="editing = false; main.batchEdit(columnName, row[columnName])" class="btn btn-primary"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>                                             
