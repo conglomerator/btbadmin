@@ -31,7 +31,7 @@ and open the template in the editor.
         <tr ng-repeat="row in main.records | orderBy: main.options.sortOrder">                                       
             <td ng-repeat="(columnName,columnMeta) in main.columns" ng-show="columnMeta.isVisible">                                 
                 <div ng-if="columnMeta.readonly">{{row[columnName]}}</div>                                            
-                <div ng-if="!columnMeta.readonly" ng-click="editing = true"><a>{{row[columnName]}}</a>&nbsp;</div>      
+                <div ng-if="!columnMeta.readonly" ng-click="alert('!'); editing = true"><a>{{row[columnName]}}</a>&nbsp;</div>      
                 <div ng-if="!columnMeta.readonly" style="position:absolute" ng-show="editing"><form role="form" class="form-inline">              
                         <div class="form-group"><input class="form-control" type="text" ng-model="row[columnName]"></div>       
                         <button type="submit" class="btn btn-primary" ng-click="editing = false"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>                                                                         
