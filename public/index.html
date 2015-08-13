@@ -44,7 +44,7 @@ angular.module('Main', ['ngRoute', 'Common', 'InputBindingTest', 'RandomNumberTe
             self.alerts[o.id] = o;
         };
         self.removeAlert = function(id) {
-            delete self.alerts[id];
+            self.alerts.splice(id,1);
         }
         self.hierarchy = [];
         self.alerts = [];
@@ -118,9 +118,9 @@ body {
     </head>
     <body>
         <div class="container-fluid jwl-alert-container">
-            <div ng-repeat="alert in main.alerts" class="alert jwl-alert alert-{{alert.type}} alert-dismissible" role="alert">
-                <button ng-click="main.removeAlert(alert.id)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{alert.message}}
+            <div ng-repeat="a in main.alerts" class="alert jwl-alert alert-{{a.type}} alert-dismissible" role="alert">
+                <button ng-click="main.removeAlert(a.id)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{a.message}}
             </div>
         </div>
         <nav class="navbar navbar-inverse navbar-fixed-top">
