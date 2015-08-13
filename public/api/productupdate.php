@@ -39,6 +39,7 @@ foreach ($args as $arg) {
     $stmt->bindParam(2,$arg[1]);
     $stmt->bindParam(3,$arg[2]);
     $stmt->execute();
+    $affected_records++;
 };
 
 // Send umber of affected records
