@@ -40,8 +40,8 @@ foreach ($args as $arg) {
     $stmt->bindParam(1,$arg[0]);
     $stmt->bindParam(2,$arg[1]);
     $stmt->bindParam(3,$arg[2]);
-    $execute_return_values .= $stmt->execute() . ' ';
-    $affected_records++;
+    if (!$stmt->execute()) trigger_error($stmt->errorInfo()[2]);
+    else $affected_records++;
 };
 
 // Send umber of affected records
