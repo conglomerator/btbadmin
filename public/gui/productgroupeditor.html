@@ -36,9 +36,10 @@ and open the template in the editor.
                 <div ng-click="editing = true"><a>{{row[columnName]}}</a>&nbsp;</div>      
                 <div style="position:absolute;z-index:99999" ng-show="editing"><form role="form" class="form-inline">              
                         <div class="form-group"><input class="form-control" type="text" ng-model="row[columnName]"></div>       
-                        <button type="submit" class="btn btn-primary" ng-click="editing = false"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>                                                                         
-                        <button type="button" ng-click="editing = false; main.batchEdit(columnName, row[columnName])" class="btn btn-primary"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>                                             
+                        <button type="submit" class="btn btn-primary" ng-click="editing = false"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>                                                                         
+                        <button type="button" class="btn btn-primary" ng-click="editing = false; main.singleSave(columnName,row['PR_ProductID'],row[columnName])"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
                         <button type="button" ng-click="editing = false; main.refineSearch(columnName, row[columnName])" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>                                        
+                        <button type="button" ng-click="editing = false; main.batchEdit(columnName, row[columnName])" class="btn btn-primary"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>                                             
                     </form></div>                                                                                        
             </td> 
         </tr>                                                                                                        
