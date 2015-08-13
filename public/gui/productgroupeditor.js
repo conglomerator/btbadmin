@@ -47,11 +47,7 @@ angular.module('ProductGroupEditor', ['ngRoute', 'Common']).
         };  
         self.getColumns();
         self.singleSave = function(field,id,value){
-            var params = {};
-            var key = field+"__"+id;
-            params[key] = value;
-            $window.alert(key+' '+JSON.stringify(params));
-            $http.post('api/productupdate.php', params).then(function(response){
+$http({method: 'POST', url: 'api/productupdate.php', data: field+'__'+id+'='+value, headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function(response){
                 $window.alert(response.data);
             },function(response){});
         };
