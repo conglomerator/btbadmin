@@ -103,12 +103,22 @@ body {
 .jwl-empty-container {
     height: 50px;
 }
+.jwl-alert-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+}
+.jwl-alert {
+    margin-top: 20px;
+}
 
         </style>
     </head>
     <body>
         <div class="container-fluid jwl-alert-container">
-            <div ng-repeat="alert in main.alerts" class="alert alert-{{alert.type}} alert-dismissible" role="alert">
+            <div ng-repeat="alert in main.alerts" class="alert jwl-alert alert-{{alert.type}} alert-dismissible" role="alert">
                 <button ng-click="main.removeAlert(alert.id)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 {{alert.message}}
             </div>
