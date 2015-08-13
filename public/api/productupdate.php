@@ -34,8 +34,8 @@ foreach ($_POST as $key => $value) {
 
 $execute_return_values = '';
 
-$stmt = $db_handle->prepare('UPDATE PRODUCTS SET '.$arg[0].' = ? WHERE PR_ProductID = ?');
 foreach ($args as $arg) {
+    $stmt = $db_handle->prepare('UPDATE PRODUCTS SET '.$arg[0].' = ? WHERE PR_ProductID = ?');
     trigger_error($arg[0].' '.$arg[1].' '.$arg[2]);
     $stmt->bindParam(1,$arg[1]);
     $stmt->bindParam(2,$arg[2]);
