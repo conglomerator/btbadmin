@@ -50,7 +50,7 @@ angular.module('ProductGroupEditor', ['ngRoute', 'Common']).
             var params = [];
             var key = field+"__"+id;
             params[key] = value;
-            $window.alert(JSON.stringify(params));
+            $window.alert(key+' '+JSON.stringify(params));
             $http.post('api/productupdate.php', params).then(function(response){
                 $window.alert(response.data);
             },function(response){});
