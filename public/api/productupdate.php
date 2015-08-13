@@ -40,7 +40,10 @@ foreach ($args as $arg) {
     $stmt->bindParam(1,$arg[0]);
     $stmt->bindParam(2,$arg[1]);
     $stmt->bindParam(3,$arg[2]);
-    if (!$stmt->execute()) trigger_error($stmt->errorInfo()[2]);
+    if (!$stmt->execute()) {
+        $error_info = $stmt->errorInfo();
+        trigger_error($error_info[2]);
+    }
     else $affected_records++;
 };
 
