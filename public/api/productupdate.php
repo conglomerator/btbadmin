@@ -29,20 +29,21 @@ foreach ($_POST as $key => $value) {
     $sanitized_id = filter_var($id,FILTER_SANITIZE_STRING);
     $sanitized_value = filter_var($value,FILTER_SANITIZE_STRING);
     array_push($args,array($sanitized_field,$sanitized_value,$sanitized_id));
+    trigger_error($sanitized_field.' '.$sanitized_value.' '.$sanitized_id);
 };
 
-trigger_error(var_dump($args));
+$execute_return_values = '';
 
 $stmt = $db_handle->prepare('UPDATE PRODUCTS SET ? = ? WHERE PR_ProductID = ?');
 foreach ($args as $arg) {
     $stmt->bindParam(1,$arg[0]);
     $stmt->bindParam(2,$arg[1]);
     $stmt->bindParam(3,$arg[2]);
-    $stmt->execute();
+    $execute_return_values .= $stmt->execute() . ' ';
     $affected_records++;
 };
 
 // Send umber of affected records
 header('Content-Type: application/json');
-echo(json_encode('Rejected: '.$rejected_args.'.  Affected: '.$affected_records));
+echo(json_encode('Rejected: '.$rejected_args.'.  Affected: '.$affected_records.'.  '.$execute_return_values));
 
