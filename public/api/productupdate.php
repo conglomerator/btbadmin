@@ -25,7 +25,6 @@ foreach ($_POST as $key => $value) {
         $rejected_args++;
         continue;        
     };
-    $sanitized_field = filter_var($field,FILTER_SANITIZE_STRING);
     $sanitized_id = filter_var($id,FILTER_SANITIZE_STRING);
     $sanitized_value = filter_var($value,FILTER_SANITIZE_STRING);
     array_push($args,array($sanitized_field,$sanitized_value,$sanitized_id));
@@ -34,7 +33,7 @@ foreach ($_POST as $key => $value) {
 
 $execute_return_values = '';
 
-$stmt = $db_handle->prepare('UPDATE PRODUCTS SET ? = ? WHERE PR_ProductID = ?');
+$stmt = $db_handle->prepare('UPDATE PRODUCTS SET '.$field.' = ? WHERE PR_ProductID = ?');
 foreach ($args as $arg) {
     trigger_error($arg[0].' '.$arg[1].' '.$arg[2]);
     $stmt->bindParam(1,$arg[0]);
