@@ -16,6 +16,7 @@ $affected_records = 0;
 $rejected_args = 0;
 $args = array();
 foreach ($_POST as $key => $value) {
+    trigger_error($key.' '.$value);
     if (!preg_match('/^[\w\d]+__[\d]+$/',$key)) {
         $rejected_args++;
         continue;
