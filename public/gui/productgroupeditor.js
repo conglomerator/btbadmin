@@ -47,12 +47,12 @@ angular.module('ProductGroupEditor', ['ngRoute', 'Common']).
         };  
         self.getColumns();
         self.singleSave = function(field,id,value){
-            var data = [];
-            data[field+'__'+id] = value;
-            $window.alert(JSON.stringify(data));
-            //$http.post('api/productupdate.php', data).then(function(response){
-            //    $window.alert(response.data);
-            //},function(response){});
+            var params = [];
+            params[field+'__'+id] = value;
+            $window.alert(JSON.stringify(params));
+            $http.post('api/productupdate.php', params).then(function(response){
+                $window.alert(response.data);
+            },function(response){});
         };
     }]);
 
