@@ -41,5 +41,5 @@ foreach ($args as $arg) {
 
 // Send umber of affected records
 header('Content-Type: application/json');
-echo(json_encode($affected_records));
+echo(json_encode('Rejected: '.$rejected_args.'.  Affected: '.$affected_records));
 

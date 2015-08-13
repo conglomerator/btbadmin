@@ -18,7 +18,7 @@ angular.module('ProductGroupEditor', ['ngRoute', 'Common']).
     run(['CommonService', 'ProductGroupEditorProperties', function (CommonService, ProductGroupEditorProperties) {
         CommonService.registerModule(ProductGroupEditorProperties);
     }]).
-    controller('ProductGroupEditorController', ['$http', 'ProductGroupEditorProperties', 'CommonService', function ($http, ProductGroupEditorProperties, CommonService) {
+    controller('ProductGroupEditorController', ['$window', '$http', 'ProductGroupEditorProperties', 'CommonService', function ($window, $http, ProductGroupEditorProperties, CommonService) {
         var self = this;
         CommonService.changeCurrentModule(ProductGroupEditorProperties);  
         self.columns = [];
@@ -46,6 +46,13 @@ angular.module('ProductGroupEditor', ['ngRoute', 'Common']).
             };                                                                                                       
         };  
         self.getColumns();
+        self.singleSave = function(field,id,value){
+            var data = [];
+            data[field+'__'+id] = value;
+            $http.post('api/productupdate.php', data).then(function(response){
+                $window.alert(response.data);
+            },function(response){});
+        };
     }]);
 
 
