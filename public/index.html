@@ -37,7 +37,17 @@ angular.module('Main', ['ngRoute', 'Common', 'InputBindingTest', 'RandomNumberTe
         $scope.$on('CurrentModuleChanged', function (event, module) {
             self.title = module.title;
         });
+        $scope.$on('AlertTriggered', function (event, alert) {
+            self.addAlert(alert);
+        });
+        self.addAlert = function(o) {
+            self.alerts[o.id] = o;
+        };
+        self.removeAlert = function(id) {
+            delete self.alerts[id];
+        }
         self.hierarchy = [];
+        self.alerts = [];
         for (var i in Modules) {
             if (Modules[i].category) {
                 if ($filter('filter')(self.hierarchy, {name: Modules[i].category}).length==0) self.hierarchy.push({name: Modules[i].category, items: []});
@@ -49,7 +59,8 @@ angular.module('Main', ['ngRoute', 'Common', 'InputBindingTest', 'RandomNumberTe
 angular.module('Common', []).
     value('Modules', []).
     value('CurrentModule', {}).
-    service('CommonService', ['$rootScope', 'Modules', 'CurrentModule', function ($rootScope, Modules, CurrentModule) {
+    value('Alerts', []).
+    service('CommonService', ['$rootScope', 'Modules', 'CurrentModule', 'Alerts', function ($rootScope, Modules, CurrentModule, Alerts) {
         var self = this;
         self.registerModule = function (module) {
             Modules.push(module); 
@@ -58,6 +69,11 @@ angular.module('Common', []).
         self.changeCurrentModule = function (module) {
             CurrentModule = module;
             $rootScope.$broadcast('CurrentModuleChanged', module);
+        };
+        self.alert = function(t, m){
+            var o = {id: Alerts.length, type: t, message: m}
+            Alerts[Alerts.length] = o;
+            $rootScope.$broadcast('AlertTriggered', o);
         };
     }]);
                                         
@@ -91,7 +107,12 @@ body {
         </style>
     </head>
     <body>
-        <div class="container-fluid jwl-alert-container"></div>
+        <div class="container-fluid jwl-alert-container">
+            <div ng-repeat="alert in main.alerts" class="alert alert-{{alert.type}} alert-dismissible" role="alert">
+                <button ng-click="main.removeAlert(alert.id)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{alert.message}}
+            </div>
+        </div>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
