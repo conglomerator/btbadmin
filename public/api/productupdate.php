@@ -31,6 +31,8 @@ foreach ($_POST as $key => $value) {
     array_push($args,array($sanitized_field,$sanitized_value,$sanitized_id));
 };
 
+trigger_error(var_dump($args));
+
 $stmt = $db_handle->prepare('UPDATE PRODUCTS SET ? = ? WHERE PR_ProductID = ?');
 foreach ($args as $arg) {
     $stmt->bindParam(1,$arg[0]);
