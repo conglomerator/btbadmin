@@ -51,6 +51,16 @@ angular.module('ProductGroupEditor', ['ngRoute', 'Common']).
                 CommonService.alert('info', response.data);
             },function(response){});
         };
+        self.saveAll = function() {
+            var dataString = '';
+            for (var i in self.records) {
+                if (dataString!='') dataString +='&';
+                dataString += self.records[i].field+'__'+self.records[i].id+'='+self.records[i].value;
+            };
+            $http({method: 'POST', url: 'api/productupdate.php', data: dataString, headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function(response){
+                CommonService.alert('info', response.data);
+            },function(response){});            
+        };
     }]);
 
 

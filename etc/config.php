@@ -19,5 +19,5 @@ $_CONFIG = array(
         'PR_UDSearch0'              =>array('readonly'=>false,'isVisible'=>true),
         'PR_UDSearch1'              =>array('readonly'=>false)
     ),
-    'LOG_PATH'          =>''
+    'LOG_PATH'          =>'/home3/cocheese/jwl/btbadmin-4.3.1/log/php.log'
 );
