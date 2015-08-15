@@ -29,7 +29,6 @@ foreach ($_POST as $key => $value) {
     $sanitized_id = filter_var($id,FILTER_SANITIZE_STRING);
     $sanitized_value = filter_var($value,FILTER_SANITIZE_STRING);
     array_push($args,array($sanitized_field,$sanitized_value,$sanitized_id));
-    trigger_error($sanitized_field.' '.$sanitized_value.' '.$sanitized_id);
 };
 
 $execute_return_values = '';
@@ -48,5 +47,5 @@ foreach ($args as $arg) {
 
 // Send umber of affected records
 header('Content-Type: application/json');
-echo(json_encode('Rejected: '.$rejected_args.'.  Affected: '.$affected_records.'.  '.$execute_return_values));
+echo(json_encode($affected_records.' records affected.'));
 
