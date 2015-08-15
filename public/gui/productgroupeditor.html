@@ -25,7 +25,8 @@ and open the template in the editor.
     </form></p>                                                                                                      
     <h2>Available Columns</h2>                                                                                       
     <p><button type="button" ng-repeat="(columnName,columnMeta) in main.columns" ng-click="columnMeta.isVisible = !columnMeta.isVisible" ng-hide="columnMeta.isVisible" class="btn btn-xs btn-success">{{columnName}}</button></p>                
-    <h2>Current Recordset</h2>                                                                                       
+    <h2>Current Recordset</h2>
+    <p><button type="button" class="btn btn-primary" ng-click="main.saveAll()"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save All</button></p>
     <table class="table table-bordered">                                                                             
         <thead><tr><th ng-repeat="(columnName,columnMeta) in main.columns" ng-show="columnMeta.isVisible"><button type="button" ng-click="columnMeta.isVisible = !columnMeta.isVisible" class="btn btn-xs btn-success">{{columnName}}</button><!--<button type="button" ng-click="main.options.sortOrder = columnName"  class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></button><button type="button" ng-click="main.options.sortOrder = '-'+columnName" class="btn btn-xs btn-success"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></button>--></th></tr></thead>  
         <tr ng-repeat="row in main.records | orderBy: main.options.sortOrder">                                       
@@ -43,7 +44,8 @@ and open the template in the editor.
                     </form></div>                                                                                        
             </td> 
         </tr>                                                                                                        
-    </table>   
+    </table>  
+    <p><button type="button" class="btn btn-primary" ng-click="main.saveAll()"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save All</button></p>
 </div>
 
 
