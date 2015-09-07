@@ -13,7 +13,7 @@ angular.module('RandomNumberTest', ['ngRoute', 'Common']).
         category: 'Tests'
     }).
     config(['$routeProvider', 'RandomNumberTestProperties', function ($routeProvider, RandomNumberTestProperties) {
-        $routeProvider.when('/'+RandomNumberTestProperties.basename, {templateUrl: '/gui/'+RandomNumberTestProperties.basename+'.html', caseInsensitiveMatch: true});
+        $routeProvider.when('/'+RandomNumberTestProperties.basename, {templateUrl: 'gui/'+RandomNumberTestProperties.basename+'.html', caseInsensitiveMatch: true});
     }]).
     run(['CommonService', 'RandomNumberTestProperties', function (CommonService, RandomNumberTestProperties) {
         CommonService.registerModule(RandomNumberTestProperties);
