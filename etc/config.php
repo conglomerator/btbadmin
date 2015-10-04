@@ -18,7 +18,8 @@ $_CONFIG = array(
         'PR_CrossSaleTemplate'      =>array('readonly'=>false),
         'PR_UDSearch0'              =>array('readonly'=>false,'isVisible'=>true),
         'PR_UDSearch1'              =>array('readonly'=>false),
+        'PR_UDSearch8'              =>array('readonly'=>false),
         'PR_URLofImage'             =>array('readonly'=>false)
     ),
-    'LOG_PDESTINATION'  =>'../log/php.log'
+    'LOG_DESTINATION'  =>'../../log/php.log'
 );
