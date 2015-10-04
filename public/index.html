@@ -19,6 +19,7 @@
         <script src="gui/randomnumbertest.js"></script>
         <script src="gui/inputbindingtest.js"></script>
         <script src="gui/productgroupeditor.js"></script>
+        <script src="gui/productsizeupdater.js"></script>
         <script src="gui/home.js"></script>
         <script src="gui/error.js"></script>
         <script>
@@ -28,7 +29,7 @@ $(document).on('click','.navbar-collapse.in',function(e) {
         $(this).collapse('hide');
     }
 });
-angular.module('Main', ['ngRoute', 'Common', 'InputBindingTest', 'RandomNumberTest', 'Home', 'Error', 'ProductGroupEditor']).
+angular.module('Main', ['ngRoute', 'Common', 'InputBindingTest', 'RandomNumberTest', 'Home', 'Error', 'ProductGroupEditor', 'ProductSizeUpdater']).
     constant('MainProperties', {
         version: 'X.X.X'
     }).
