@@ -31,7 +31,7 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 });
 angular.module('Main', ['ngRoute', 'Common', 'InputBindingTest', 'RandomNumberTest', 'Home', 'Error', 'ProductGroupEditor', 'ProductSizeUpdater']).
     constant('MainProperties', {
-        version: 'X.X.X'
+        version: '4.4.0'
     }).
     controller('MainController', ['$scope', '$filter', 'Modules', 'CurrentModule', 'MainProperties', function($scope, $filter, Modules, CurrentModule, MainProperties) {
         var self = this;
