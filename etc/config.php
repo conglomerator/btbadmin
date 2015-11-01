@@ -21,5 +21,14 @@ $_CONFIG = array(
         'PR_UDSearch8'              =>array('readonly'=>false),
         'PR_URLofImage'             =>array('readonly'=>false)
     ),
+    'BRAND_COLUMNS'     =>array(
+        'Name'              =>array('readonly'=>false,'isVisible'=>true),
+        'Title'             =>array('readonly'=>false),
+        'MetaDescription'   =>array('readonly'=>false,'isVisible'=>true),
+        'MetaKeywords'      =>array('readonly'=>false),
+        'Text'              =>array('readonly'=>false),
+        'SearchString'      =>array('readonly'=>false),
+        'URL'               =>array('readonly'=>false)
+    ),
     'LOG_DESTINATION'  =>'../../log/php.log'
 );
